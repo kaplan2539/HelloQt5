@@ -8,19 +8,21 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${${PROJECT_NAME}_SOURCE_DIR}/cmake)
 message(STATUS "PROJECT_NAME=${PROJECT_NAME}")
 message(STATUS "CMAKE_MODULE_PATH=${CMAKE_MODULE_PATH}")
 
-#set mac os x
-set(CMAKE_OSX_ARCHITECTURES "i386")
-set(CMAKE_OSX_DEPLOYMENT_TARGET "10.9")
-set(CMAKE_OSX_SYSROOT "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX${CMAKE_OSX_DEPLOYMENT_TARGET}.sdk")
-set(CMAKE_SYSROOT "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX${CMAKE_OSX_DEPLOYMENT_TARGET}.sdk")
-
-set(MACOSX_BUNDLE_BUNDLE_NAME "${PROJECT_NAME}")
-set(MACOSX_BUNDLE_BUNDLE_VERSION "1.0")
-set(MACOSX_BUNDLE_LONG_VERSION_STRING "1.0")
-set(MACOSX_BUNDLE_SHORT_VERSION_STRING "1.0")
-set(MACOSX_BUNDLE_COPYRIGHT "Copyright (c) 2015 MeMySelfAndI.")
-set(MACOSX_BUNDLE_GUI_IDENTIFIER "com.memyselfandi.${PROJECT_NAME}")
-#set(MACOSX_BUNDLE_ICON_FILE AppIcon.icns)
+if(APPLE)
+	#set mac os x
+	set(CMAKE_OSX_ARCHITECTURES "i386")
+	set(CMAKE_OSX_DEPLOYMENT_TARGET "10.9")
+	set(CMAKE_OSX_SYSROOT "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX${CMAKE_OSX_DEPLOYMENT_TARGET}.sdk")
+	set(CMAKE_SYSROOT "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX${CMAKE_OSX_DEPLOYMENT_TARGET}.sdk")
+	
+	set(MACOSX_BUNDLE_BUNDLE_NAME "${PROJECT_NAME}")
+	set(MACOSX_BUNDLE_BUNDLE_VERSION "1.0")
+	set(MACOSX_BUNDLE_LONG_VERSION_STRING "1.0")
+	set(MACOSX_BUNDLE_SHORT_VERSION_STRING "1.0")
+	set(MACOSX_BUNDLE_COPYRIGHT "Copyright (c) 2015 MeMySelfAndI.")
+	set(MACOSX_BUNDLE_GUI_IDENTIFIER "com.memyselfandi.${PROJECT_NAME}")
+	#set(MACOSX_BUNDLE_ICON_FILE AppIcon.icns)
+endif(APPLE)
 
 #force 32-bit build
 set(CMAKE_CFLAGS "-m32")
@@ -102,4 +104,6 @@ target_link_libraries(${PROJECT_NAME}
 
 include(DeployQt5)
 
-install_qt5_executable(${PROJECT_NAME}.app)
+if(APPLE)
+	install_qt5_executable(${PROJECT_NAME}.app)
+endif(APPLE)
