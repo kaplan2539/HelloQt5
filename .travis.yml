@@ -4,4 +4,7 @@ compiler:
   - clang
 
 # Change this to your needs
-script: cmake --version
+script:
+  - cmake --version
+  - qmake --version
+  - g++ --version
