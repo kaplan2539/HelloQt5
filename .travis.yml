@@ -1,10 +1,9 @@
-language: objective-c
+language:
+    - objective-c
 
-#compiler:
-#  - clang
+install:
+    - brew install cmake
 
-# Change this to your needs
 script:
-  - cmake --version
-#  - qmake --version
-  - g++ --version
+    - cmake --version
+
