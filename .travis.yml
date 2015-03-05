@@ -6,4 +6,5 @@ install:
 
 script:
     - cmake --version
-
+    - pwd
+    - ls
