@@ -3,8 +3,13 @@ language:
 
 install:
     - brew install cmake
+    - brew install ninja
 
 script:
     - cmake --version
     - pwd
     - ls
+    - mkdir build
+    - cd build
+    - cmake -G Ninja ..
+    - ninja
