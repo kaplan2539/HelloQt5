@@ -4,6 +4,7 @@ language:
 install:
     - brew install cmake
     - brew install ninja
+    - time brew install qt5
 
 script:
     - cmake --version
