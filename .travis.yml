@@ -7,6 +7,7 @@ install:
     - time brew install qt5
 
 script:
+    - export CMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}:/usr/local/opt/qt5"
     - cmake --version
     - pwd
     - ls
