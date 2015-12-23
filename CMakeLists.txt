@@ -1,109 +1,124 @@
-cmake_minimum_required(VERSION 2.8.11)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8.12)
+ 
+PROJECT("HelloQt")
 
-project(HelloQt)
+SET(CMAKE_INCLUDE_CURRENT_DIR ON)
+SET(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
-set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR})
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${${PROJECT_NAME}_SOURCE_DIR}/cmake)
+SET( PROJECT_VERSION_MINOR "0" )
+SET( PROJECT_VERSION_MAJOR "0" )
+SET( PROJECT_VERSION_PATCH "0" )
+SET( PROJECT_VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}" )
 
-#message(STATUS "PROJECT_NAME=${PROJECT_NAME}")
-message(STATUS "CMAKE_MODULE_PATH=${CMAKE_MODULE_PATH}")
+MESSAGE( "CMAKE_SOURCE_DIR=${CMAKE_SOURCE_DIR}" )
+MESSAGE( "CMAKE_ROOT=${CMAKE_ROOT}" )
+MESSAGE( "CMAKE_SYSTEM=${CMAKE_SYSTEM}" )
+ 
+SET(CMAKE_AUTOMOC ON)
+FIND_PACKAGE(Qt5Widgets REQUIRED)
 
-if(APPLE)
-	#set mac os x
-	set(CMAKE_OSX_ARCHITECTURES "i386")
-	set(CMAKE_OSX_DEPLOYMENT_TARGET "10.9")
-	set(CMAKE_OSX_SYSROOT "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX${CMAKE_OSX_DEPLOYMENT_TARGET}.sdk")
-	set(CMAKE_SYSROOT "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX${CMAKE_OSX_DEPLOYMENT_TARGET}.sdk")
-	
-	set(MACOSX_BUNDLE_BUNDLE_NAME "${PROJECT_NAME}")
-	set(MACOSX_BUNDLE_BUNDLE_VERSION "1.0")
-	set(MACOSX_BUNDLE_LONG_VERSION_STRING "1.0")
-	set(MACOSX_BUNDLE_SHORT_VERSION_STRING "1.0")
-	set(MACOSX_BUNDLE_COPYRIGHT "Copyright (c) 2015 MeMySelfAndI.")
-	set(MACOSX_BUNDLE_GUI_IDENTIFIER "com.memyselfandi.${PROJECT_NAME}")
-	#set(MACOSX_BUNDLE_ICON_FILE AppIcon.icns)
-endif(APPLE)
-
-#force 32-bit build
-set(CMAKE_CFLAGS "-m32")
-set(CMAKE_CXX_FLAGS "-m32")
-set(CMAKE_LFLAGS "-m32")
-
-# Find includes in corresponding build directories
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
-# Instruct CMake to run moc automatically when needed.
-set(CMAKE_AUTOMOC ON)
-
-# Find the QtWidgets library
-find_package(Qt5Widgets)
-
-message(STATUS "CMAKE_OSX_SYSROOT=${CMAKE_OSX_SYSROOT}")
-message(STATUS "CMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}")
-message(STATUS "MACOSX_DEPLOYMENT_TARGET=${MACOSX_DEPLOYMENT_TARGET}")
-
-FIND_LIBRARY(APP_SERVICES_LIBRARY NAMES ApplicationServices
-       NO_DEFAULT_PATH
-       NO_CMAKE_ENVIRONMENT_PATH
-       NO_CMAKE_PATH
-       NO_SYSTEM_ENVIRONMENT_PATH
-       NO_CMAKE_SYSTEM_PATH
-       PATHS "${CMAKE_OSX_SYSROOT}/System/Library/Frameworks/"
-)
-FIND_LIBRARY(COCOA_LIBRARY NAMES Cocoa
-       NO_DEFAULT_PATH
-       NO_CMAKE_ENVIRONMENT_PATH
-       NO_CMAKE_PATH
-       NO_SYSTEM_ENVIRONMENT_PATH
-       NO_CMAKE_SYSTEM_PATH
-       PATHS "${CMAKE_OSX_SYSROOT}/System/Library/Frameworks/"
-)
-
-#find_library( COREFOUNDATION_FRAMEWORK NAMES CoreFoundation
-#       NO_DEFAULT_PATH
-#       NO_CMAKE_ENVIRONMENT_PATH
-#       NO_CMAKE_PATH
-#       NO_SYSTEM_ENVIRONMENT_PATH
-#       NO_CMAKE_SYSTEM_PATH
-#       PATHS "${CMAKE_OSX_SYSROOT}/System/Library/Frameworks/"
-#   )
-#message(STATUS "framework: ${COREFOUNDATION_FRAMEWORK}" )
-
-
-message(STATUS "found framework Cocoa at \"${COCOA_LIBRARY}\"")
-message(STATUS "found framework ApplicationServices at \"${APP_SERVICES_LIBRARY}\"")
+ 
+SET(SRCS main.cpp mainwindow.cpp)
+SET( MAIN_EXECUTABLE hello )
 
 qt5_wrap_ui(UI_HEADERS mainwindow.ui)
-
-#not necessary (actually not allowed) when AUTOMOC is turned on
-#qt5_wrap_cpp(MOC_HEADERS
-#            # mainwindow.cpp wrapper.mm main.cpp
-#             mainwindow.h wrapper.h)
-
+qt5_add_resources(RESOURCES resources.qrc)
 message(STATUS "UI_HEADERS=${UI_HEADERS}")
 message(STATUS "MOC_HEADERS=${MOC_HEADERS}")
+message(STATUS "RESOURCES=${RESOURCES}")
+ 
+ADD_EXECUTABLE("${MAIN_EXECUTABLE}" ${SRCS} ${UI_HEADERS} ${MOC_HEADERS} ${RESOURCES})
+TARGET_LINK_LIBRARIES(${MAIN_EXECUTABLE} Qt5::Widgets)
+INSTALL(TARGETS ${MAIN_EXECUTABLE} DESTINATION bin)
 
-# Tell CMake to create the executable
-add_executable(${PROJECT_NAME}
-	       WIN32
-	       MACOSX_BUNDLE           #create an .app bundle on Mac
-               ${UI_HEADERS}
-               ${MOC_HEADERS}
-               main.cpp
-               mainwindow.cpp
-               mainwindow.h
-)
+SET (SVG_ICON_FILE "${CMAKE_SOURCE_DIR}/icon.svg")
 
-# Use the Widgets module from Qt 5.
-target_link_libraries(${PROJECT_NAME}
-                      Qt5::Widgets
-                      ${APP_SERVICE_LIBRARY}
-                      ${COCOA_LIBRARY}
-#                      ${COREFOUNDATION_FRAMEWORK}
-                     )
+IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 
-include(DeployQt5)
+  SET( CPACK_GENERATOR              "Bundle" )
+  SET( CPACK_BUNDLE_PLIST           "${CMAKE_CURRENT_BINARY_DIR}/Info.plist" )
+  SET( CPACK_BUNDLE_NAME            "${PROJECT_NAME}" )
+  SET( CPACK_BUNDLE_ICON            "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.icns" )
+  SET( CPACK_BUNDLE_STARTUP_COMMAND "${CMAKE_CURRENT_BINARY_DIR}/mac_run.sh" )
+	
+  SET( MACOSX_BUNDLE_EXECUTABLE_NAME      "${CMAPE_BUNDLE_NAME}" )  #CFBundleExecutable         
+  SET( MACOSX_BUNDLE_INFO_STRING          "" )  #CFBundleGetInfoString      
+  SET( MACOSX_BUNDLE_ICON_FILE            "${CPACK_BUNDLE_NAME}" ) #CFBundleIconFile
+  SET( MACOSX_BUNDLE_GUI_IDENTIFIER       "" )  #CFBundleIdentifier         
+  SET( MACOSX_BUNDLE_LONG_VERSION_STRING  "" ) 	#CFBundleLongVersionString  
+  SET( MACOSX_BUNDLE_BUNDLE_NAME          "${CPACK_BUNDLE_NAME}" )  #CFBundleName               
+  SET( MACOSX_BUNDLE_SHORT_VERSION_STRING "${PROJECT_VERSION}" )	#CFBundleShortVersionString 
+  SET( MACOSX_BUNDLE_BUNDLE_VERSION       "${PROJECT_VERSION}" )  #CFBundleVersion            
+  SET( MACOSX_BUNDLE_COPYRIGHT            "" )  #NSHumanReadableCopyright   
 
-if(APPLE)
-	install_qt5_executable(${PROJECT_NAME}.app)
-endif(APPLE)
+  CONFIGURE_FILE( "${CMAKE_SOURCE_DIR}/mac/mac_run.sh.in" 
+                  "${CMAKE_CURRENT_BINARY_DIR}/mac_run.sh" @ONLY )
+
+  CONFIGURE_FILE( "${CMAKE_ROOT}/Modules/MacOSXBundleInfo.plist.in" 
+                  "${CMAKE_CURRENT_BINARY_DIR}/Info.plist" )
+
+  FIND_PROGRAM(RSVG_CONVERT NAMES rsvg-convert)
+  MARK_AS_ADVANCED(RSVG_CONVERT)
+
+  FIND_PROGRAM(ICONUTIL_EXECUTABLE NAMES iconutil)
+  MARK_AS_ADVANCED(ICONUTIL_EXECUTABLE)
+
+  SET( ICONSET_DIR "icons.iconset" )
+  ADD_CUSTOM_TARGET("${ICONSET_DIR}" ALL COMMAND ${CMAKE_COMMAND} -E make_directory "${ICONSET_DIR}")
+
+  FOREACH( SIZE "16" "32" "128" "256" "512" )
+    ADD_CUSTOM_COMMAND( OUTPUT "${ICONSET_DIR}/icon_${SIZE}x${SIZE}.png"
+                        COMMAND ${RSVG_CONVERT} -w ${SIZE} -h ${SIZE} ${SVG_ICON_FILE} -o "${ICONSET_DIR}/icon_${SIZE}x${SIZE}.png"
+                        DEPENDS ${SVG_ICON_FILE} "${ICONSET_DIR}"
+                      )
+    ADD_CUSTOM_TARGET(icon_${SIZE}x${SIZE} ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/${ICONSET_DIR}/icon_${SIZE}x${SIZE}.png" )
+    LIST(APPEND ICONS icon_${SIZE}x${SIZE} )
+
+    MATH( EXPR DOUBLE_SIZE "${SIZE} * 2" )
+    ADD_CUSTOM_COMMAND( OUTPUT "${ICONSET_DIR}/icon_${SIZE}x${SIZE}@2x.png"
+                        COMMAND ${RSVG_CONVERT} -w ${DOUBLE_SIZE} -h ${DOUBLE_SIZE} ${SVG_ICON_FILE} -o "${ICONSET_DIR}/icon_${SIZE}x${SIZE}@2x.png"
+                        DEPENDS ${SVG_ICON_FILE} "${ICONSET_DIR}"
+                      )
+    ADD_CUSTOM_TARGET("icon_${SIZE}x${SIZE}at2x" ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/${ICONSET_DIR}/icon_${SIZE}x${SIZE}@2x.png")
+    LIST(APPEND ICONS icon_${SIZE}x${SIZE}at2x )
+  ENDFOREACH()
+  
+  ADD_CUSTOM_TARGET("icon.icns" ALL COMMAND ${ICONUTIL_EXECUTABLE} -c icns -o ${CPACK_BUNDLE_ICON} "${CMAKE_CURRENT_BINARY_DIR}/icons.iconset" DEPENDS ${ICONS})
+
+ELSEIF(${CMAKE_SYSTEM_NAME} MATCHES    "Linux")
+  INSTALL( FILES "${SVG_ICON_FILE}" DESTINATION share/icons/hicolor/scalable/apps RENAME ${PROJECT_NAME}.svg )
+
+  FIND_PROGRAM(RSVG_CONVERT NAMES rsvg-convert)
+  MARK_AS_ADVANCED(RSVG_CONVERT)
+
+  FOREACH( SIZE "16" "32" "48" "64" "128" "256" )
+    ADD_CUSTOM_COMMAND( OUTPUT icon_${SIZE}x${SIZE}.png
+                        COMMAND ${RSVG_CONVERT} -w ${SIZE} -h ${SIZE} ${SVG_ICON_FILE} -o icon_${SIZE}x${SIZE}.png
+                        DEPENDS ${SVG_ICON_FILE}
+                      )
+    ADD_CUSTOM_TARGET(icon_${SIZE}x${SIZE} ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/icon_${SIZE}x${SIZE}.png)
+    INSTALL( FILES "${CMAKE_CURRENT_BINARY_DIR}/icon_${SIZE}x${SIZE}.png"
+             DESTINATION share/icons/hicolor/${SIZE}x${SIZE}/apps RENAME ${PROJECT_NAME}.png )
+  ENDFOREACH()
+
+  SET( DESKTOP_FILE_VERSION    "${PROJECT_VERSION}" )
+  SET( DESKTOP_FILE_NAME       "${PROJECT_NAME}" )
+  SET( DESKTOP_FILE_COMMENT    "" )
+  SET( DESKTOP_FILE_EXEC       "${MAIN_EXECUTABLE}" )
+  SET( DESKTOP_FILE_ICON       "${PROJECT_NAME}" )
+  SET( DESKTOP_FILE_TERMINAL   "false" )
+  SET( DESKTOP_FILE_TYPE       "Application" )
+  SET( DESKTOP_FILE_CATEGORIES "Utiltiy;Application;" )
+
+  SET( DESKTOP_FILE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.desktop" )
+  CONFIGURE_FILE( "${CMAKE_SOURCE_DIR}/ubuntu/desktopfile.in" "${DESKTOP_FILE}" )
+  INSTALL( FILES "${DESKTOP_FILE}" DESTINATION share/applications )
+ 
+  SET( CPACK_GENERATOR                 "DEB")
+  SET( CPACK_DEBIAN_PACKAGE_MAINTAINER "Your Name Here" )
+  SET( CPACK_DEBIAN_PACKAGE_SHLIBDEPS  ON )
+ENDIF()
+
+SET( CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}" )
+
+INCLUDE( CPack )
