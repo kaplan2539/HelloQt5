@@ -34,89 +34,9 @@ INSTALL(TARGETS ${MAIN_EXECUTABLE} DESTINATION bin)
 SET (SVG_ICON_FILE "${CMAKE_SOURCE_DIR}/icon.svg")
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-
-  SET( CPACK_GENERATOR              "Bundle" )
-  SET( CPACK_BUNDLE_PLIST           "${CMAKE_CURRENT_BINARY_DIR}/Info.plist" )
-  SET( CPACK_BUNDLE_NAME            "${PROJECT_NAME}" )
-  SET( CPACK_BUNDLE_ICON            "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.icns" )
-  SET( CPACK_BUNDLE_STARTUP_COMMAND "${CMAKE_CURRENT_BINARY_DIR}/mac_run.sh" )
-	
-  SET( MACOSX_BUNDLE_EXECUTABLE_NAME      "${CMAPE_BUNDLE_NAME}" )  #CFBundleExecutable         
-  SET( MACOSX_BUNDLE_INFO_STRING          "" )  #CFBundleGetInfoString      
-  SET( MACOSX_BUNDLE_ICON_FILE            "${CPACK_BUNDLE_NAME}" ) #CFBundleIconFile
-  SET( MACOSX_BUNDLE_GUI_IDENTIFIER       "" )  #CFBundleIdentifier         
-  SET( MACOSX_BUNDLE_LONG_VERSION_STRING  "" ) 	#CFBundleLongVersionString  
-  SET( MACOSX_BUNDLE_BUNDLE_NAME          "${CPACK_BUNDLE_NAME}" )  #CFBundleName               
-  SET( MACOSX_BUNDLE_SHORT_VERSION_STRING "${PROJECT_VERSION}" )	#CFBundleShortVersionString 
-  SET( MACOSX_BUNDLE_BUNDLE_VERSION       "${PROJECT_VERSION}" )  #CFBundleVersion            
-  SET( MACOSX_BUNDLE_COPYRIGHT            "" )  #NSHumanReadableCopyright   
-
-  CONFIGURE_FILE( "${CMAKE_SOURCE_DIR}/mac/mac_run.sh.in" 
-                  "${CMAKE_CURRENT_BINARY_DIR}/mac_run.sh" @ONLY )
-
-  CONFIGURE_FILE( "${CMAKE_ROOT}/Modules/MacOSXBundleInfo.plist.in" 
-                  "${CMAKE_CURRENT_BINARY_DIR}/Info.plist" )
-
-  FIND_PROGRAM(RSVG_CONVERT NAMES rsvg-convert)
-  MARK_AS_ADVANCED(RSVG_CONVERT)
-
-  FIND_PROGRAM(ICONUTIL_EXECUTABLE NAMES iconutil)
-  MARK_AS_ADVANCED(ICONUTIL_EXECUTABLE)
-
-  SET( ICONSET_DIR "icons.iconset" )
-  ADD_CUSTOM_TARGET("${ICONSET_DIR}" ALL COMMAND ${CMAKE_COMMAND} -E make_directory "${ICONSET_DIR}")
-
-  FOREACH( SIZE "16" "32" "128" "256" "512" )
-    ADD_CUSTOM_COMMAND( OUTPUT "${ICONSET_DIR}/icon_${SIZE}x${SIZE}.png"
-                        COMMAND ${RSVG_CONVERT} -w ${SIZE} -h ${SIZE} ${SVG_ICON_FILE} -o "${ICONSET_DIR}/icon_${SIZE}x${SIZE}.png"
-                        DEPENDS ${SVG_ICON_FILE} "${ICONSET_DIR}"
-                      )
-    ADD_CUSTOM_TARGET(icon_${SIZE}x${SIZE} ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/${ICONSET_DIR}/icon_${SIZE}x${SIZE}.png" )
-    LIST(APPEND ICONS icon_${SIZE}x${SIZE} )
-
-    MATH( EXPR DOUBLE_SIZE "${SIZE} * 2" )
-    ADD_CUSTOM_COMMAND( OUTPUT "${ICONSET_DIR}/icon_${SIZE}x${SIZE}@2x.png"
-                        COMMAND ${RSVG_CONVERT} -w ${DOUBLE_SIZE} -h ${DOUBLE_SIZE} ${SVG_ICON_FILE} -o "${ICONSET_DIR}/icon_${SIZE}x${SIZE}@2x.png"
-                        DEPENDS ${SVG_ICON_FILE} "${ICONSET_DIR}"
-                      )
-    ADD_CUSTOM_TARGET("icon_${SIZE}x${SIZE}at2x" ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/${ICONSET_DIR}/icon_${SIZE}x${SIZE}@2x.png")
-    LIST(APPEND ICONS icon_${SIZE}x${SIZE}at2x )
-  ENDFOREACH()
-  
-  ADD_CUSTOM_TARGET("icon.icns" ALL COMMAND ${ICONUTIL_EXECUTABLE} -c icns -o ${CPACK_BUNDLE_ICON} "${CMAKE_CURRENT_BINARY_DIR}/icons.iconset" DEPENDS ${ICONS})
-
+  INCLUDE("mac/packaging.cmake")
 ELSEIF(${CMAKE_SYSTEM_NAME} MATCHES    "Linux")
-  INSTALL( FILES "${SVG_ICON_FILE}" DESTINATION share/icons/hicolor/scalable/apps RENAME ${PROJECT_NAME}.svg )
-
-  FIND_PROGRAM(RSVG_CONVERT NAMES rsvg-convert)
-  MARK_AS_ADVANCED(RSVG_CONVERT)
-
-  FOREACH( SIZE "16" "32" "48" "64" "128" "256" )
-    ADD_CUSTOM_COMMAND( OUTPUT icon_${SIZE}x${SIZE}.png
-                        COMMAND ${RSVG_CONVERT} -w ${SIZE} -h ${SIZE} ${SVG_ICON_FILE} -o icon_${SIZE}x${SIZE}.png
-                        DEPENDS ${SVG_ICON_FILE}
-                      )
-    ADD_CUSTOM_TARGET(icon_${SIZE}x${SIZE} ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/icon_${SIZE}x${SIZE}.png)
-    INSTALL( FILES "${CMAKE_CURRENT_BINARY_DIR}/icon_${SIZE}x${SIZE}.png"
-             DESTINATION share/icons/hicolor/${SIZE}x${SIZE}/apps RENAME ${PROJECT_NAME}.png )
-  ENDFOREACH()
-
-  SET( DESKTOP_FILE_VERSION    "${PROJECT_VERSION}" )
-  SET( DESKTOP_FILE_NAME       "${PROJECT_NAME}" )
-  SET( DESKTOP_FILE_COMMENT    "" )
-  SET( DESKTOP_FILE_EXEC       "${MAIN_EXECUTABLE}" )
-  SET( DESKTOP_FILE_ICON       "${PROJECT_NAME}" )
-  SET( DESKTOP_FILE_TERMINAL   "false" )
-  SET( DESKTOP_FILE_TYPE       "Application" )
-  SET( DESKTOP_FILE_CATEGORIES "Utiltiy;Application;" )
-
-  SET( DESKTOP_FILE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.desktop" )
-  CONFIGURE_FILE( "${CMAKE_SOURCE_DIR}/ubuntu/desktopfile.in" "${DESKTOP_FILE}" )
-  INSTALL( FILES "${DESKTOP_FILE}" DESTINATION share/applications )
- 
-  SET( CPACK_GENERATOR                 "DEB")
-  SET( CPACK_DEBIAN_PACKAGE_MAINTAINER "Your Name Here" )
-  SET( CPACK_DEBIAN_PACKAGE_SHLIBDEPS  ON )
+  INCLUDE("ubuntu/packaging.cmake")
 ENDIF()
 
 SET( CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}" )
