@@ -1,3 +1,5 @@
+SET(CPACK_STRIP_FILES TRUE)
+
 INSTALL( FILES "${SVG_ICON_FILE}" DESTINATION share/icons/hicolor/scalable/apps RENAME ${PROJECT_NAME}.svg )
 
 FIND_PROGRAM(RSVG_CONVERT NAMES rsvg-convert)
@@ -25,6 +27,22 @@ SET( DESKTOP_FILE_CATEGORIES "Utiltiy;Application;" )
 SET( DESKTOP_FILE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.desktop" )
 CONFIGURE_FILE( "${CMAKE_SOURCE_DIR}/ubuntu/desktopfile.in" "${DESKTOP_FILE}" )
 INSTALL( FILES "${DESKTOP_FILE}" DESTINATION share/applications )
+
+#License file
+INSTALL( FILES "${CMAKE_SOURCE_DIR}/LICENSE"
+         RENAME "copyright"
+         DESTINATION "share/doc/${CPACK_PACKAGE_FILE_NAME}/"
+         PERMISSIONS
+         OWNER_WRITE OWNER_READ
+         GROUP_READ
+         WORLD_READ )
+
+#changelog
+EXECUTE_PROCESS( COMMAND gzip -9 -c ${CMAKE_SOURCE_DIR}/ubuntu/changelog
+                 WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
+                 OUTPUT_FILE "${CMAKE_BINARY_DIR}/changelog.gz" )
+INSTALL( FILES "${CMAKE_BINARY_DIR}/changelog.gz"
+         DESTINATION "share/doc/${CPACK_PACKAGE_FILE_NAME}/")
 
 SET( CPACK_GENERATOR                 "DEB")
 SET( CPACK_DEBIAN_PACKAGE_MAINTAINER "Your Name Here" )
