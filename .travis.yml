@@ -1,10 +1,11 @@
 language: c
 
-os:
-    - linux
-      dist: xenial
-      sudo: required
-    - osx
+matrix:
+    include:
+        - os: linux
+          dist: trusty
+          sudo: required
+        - os: osx
 
 script:
     - export CMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}:/usr/local/opt/qt5"
