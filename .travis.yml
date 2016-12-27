@@ -16,3 +16,4 @@ script:
     - cd build
     - cmake -G Ninja ..
     - ninja
+    - cpack
