@@ -5,6 +5,7 @@ install:
     - brew ls --versions cmake > /dev/null || brew install cmake 
     - brew ls --versions ninja > /dev/null || brew install ninja
     - brew ls --versions qt5 > /dev/null || brew install qt5
+    - brew ls --versions librsvg > /dev/null || brew install librsvg
 
 script:
     - export CMAKE_PREFIX_PATH="${CMAKE_PREFIX_PATH}:/usr/local/opt/qt5"
