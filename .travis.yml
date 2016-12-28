@@ -13,7 +13,7 @@ script:
 
 deploy:
   provider: bintray
-  file: bintray.json
+  file: build/bintray.json
   user: kaplan2539
   key:
     secure: B5YAusUaIsKya44BtKrxNsz6m3IUMulBYqIx74PD9UjVCsswJYNlD5kivd/ycdUjwsT+xc2NGia9WbdjL7Mt3AjfPOMr3W6CUfHYK8k9/WGeJZJk3ABIqBgIDnCv5nIqxAEieOLwx2YSHauNFK3QESkAyrznt9Z/L/lE8L/kQUU=
