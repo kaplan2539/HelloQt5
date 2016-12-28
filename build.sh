@@ -10,6 +10,7 @@ export PROJECT=${PROJECT%.git}
 export GITUSER=${REPO%/*}; GITUSER=${GITUSER##*[:/]}
 
 echo "git branch: $(git branch)"
+echo "git branch --contains: $(git branch --contains)"
 echo "git rev-parse --abbrev-ref HEAD: $(git rev-parse --abbrev-ref HEAD)"
 echo "OS=${OS}"
 echo "BRANCH=${BRANCH}"
