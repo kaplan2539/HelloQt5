@@ -2,7 +2,7 @@
 
 set -e
 
-export DATE="$(date -u '+%Y-%m-%d %H:%M:%S UTF')"
+export DATE="$(date +%Y-%m-%dT%H:%M:%S%z)"
 export LICENSE=MIT
 export OS=$(uname -s)
 export BRANCH=${BRANCH:-$(git branch |awk '/\*/ {print $2}')}
