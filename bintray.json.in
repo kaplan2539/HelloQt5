@@ -1,22 +1,23 @@
 {
     "package": {
-        "name": "auto-upload",
+        "name": "travis",
         "repo": "${PROJECT}",
         "subject": "${GITUSER}",
-        "desc": "I was pushed completely automatically",
+        "desc": "auto-triggered travis builds",
         "vcs_url": "${REPO}",
         "github_use_tag_release_notes": true,
         "github_release_notes_file": "RELEASE.txt",
-        "licenses": ["MIT"],
-        "labels": ["${PROJECT}", "${BRANCH}", "${GITUSER}"],
+        "licenses": ["${LICENSE}"],
+        "labels": ["${PROJECT}", "${GITUSER}"],
         "public_download_numbers": false,
         "public_stats": false
     },
 
     "version": {
-        "name": "lastbuild",
-        "desc": "This is a version",
-        "vcs_tag": "",
+        "name": "lastbuild-${BRANCH}",
+        "desc": "last auto-triggered build",
+        "released": "${DATE}",
+        "vcs_tag": "${REVISION}",
         "gpgSign": false
     },
 

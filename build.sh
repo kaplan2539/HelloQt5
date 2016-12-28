@@ -2,12 +2,15 @@
 
 set -e
 
+export DATE="$(date -u '+%Y-%m-%d %H:%M:%S UTF')"
+export LICENSE=MIT
 export OS=$(uname -s)
 export BRANCH=${BRANCH:-$(git branch |awk '/\*/ {print $2}')}
 export REPO=$(git remote get-url origin)
 export PROJECT=${REPO##*/}
 export PROJECT=${PROJECT%.git}
 export GITUSER=${REPO%/*}; GITUSER=${GITUSER##*[:/]}
+export REVISION=$(git rev-parse HEAD)
 
 echo "git branch: $(git branch)"
 echo "git branch --contains: $(git branch --contains)"
@@ -17,6 +20,8 @@ echo "BRANCH=${BRANCH}"
 echo "REPO=${REPO}"
 echo "PROJECT=${PROJECT}"
 echo "GITUSER=${GITUSER}"
+echo "REVISION=${REVISION}"
+echo "DATE=${DATE}"
 
 if [[ "$BRANCH" != "master" ]]; then
     exit 1;
