@@ -1,11 +1,14 @@
 #!/bin/bash
 
+set -e
+
 OS=$(uname -s)
 
 build() {
+rm -rf build
 mkdir build
 pushd build
-cmake ..
+cmake -G Ninja ..
 ninja
 cpack
 popd
