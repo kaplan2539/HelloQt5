@@ -23,8 +23,8 @@
 
     "files":
         [
-        {"includePattern": "build/(.*\\.deb)", "excludePattern": ".*/do-not-deploy/.*", "uploadPattern": "exp/$1"},
-        {"includePattern": "build/(.*\\.dmg)", "excludePattern": ".*/do-not-deploy/.*", "uploadPattern": "exp/$1"}
+        {"includePattern": "build/([^/]*\\.deb)", "excludePattern": ".*/do-not-deploy/.*", "uploadPattern": "master/ubuntu/$1"},
+        {"includePattern": "build/([^/]*\\.dmg)", "excludePattern": ".*/do-not-deploy/.*", "uploadPattern": "master/mac/$1"}
         ],
     "publish": true
 }
