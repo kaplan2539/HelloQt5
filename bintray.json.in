@@ -22,8 +22,8 @@
 
     "files":
         [
-        {"includePattern": "build/([^/]*\\.deb)", "excludePattern": ".*/do-not-deploy/.*", "uploadPattern": "${BRANCH}/ubuntu/$1"},
-        {"includePattern": "build/([^/]*\\.dmg)", "excludePattern": ".*/do-not-deploy/.*", "uploadPattern": "${BRANCH}/mac/$1"}
+        {"includePattern": "build/([^/]*\\.deb)", "excludePattern": ".*/do-not-deploy/.*", "uploadPattern": "${BRANCH}/ubuntu/$1", "matrixParams": { "override": 1 } },
+        {"includePattern": "build/([^/]*\\.dmg)", "excludePattern": ".*/do-not-deploy/.*", "uploadPattern": "${BRANCH}/mac/$1", "matrixParams": { "override": 1 } }
         ],
     "publish": true
 }
