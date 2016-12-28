@@ -14,3 +14,5 @@ brew_install cmake
 brew_install qt5
 brew_install librsvg
 brew_install ninja
+brew_install gettext
+brew link --force gettext
