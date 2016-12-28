@@ -3,7 +3,7 @@
 set -e
 
 export OS=$(uname -s)
-export BRANCH=$(git branch |awk '/\*/ {print $2}')
+export BRANCH=${BRANCH:-$(git branch |awk '/\*/ {print $2}')}
 export REPO=$(git remote get-url origin)
 export PROJECT=${REPO##*/}
 export PROJECT=${PROJECT%.git}
