@@ -13,11 +13,10 @@ title: Home
   {{ b.branch | default: "no branch" }} <br/>
 {% endfor %}
 
-platforms: {{ platforms }} <br/>
 {% assign platforms = platforms | uniq %} 
 platforms:
 {% for p in platforms %}
-{{ p }} <&nbsp;>
+{{ p }} &nbsp;
 {% endfor %}
 
 <br/>
