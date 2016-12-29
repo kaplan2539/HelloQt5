@@ -3,11 +3,11 @@ layout: default
 title: Home
 ---
 
-<h1>HelloQt5!</h1>
+<h1>HelloQt5</h1>
 
 {% assign platforms = site.array %}
-{% assign platforms = platforms | "ms dos" %}
-{% assign platforms = platforms | "dr dos" %}
+{% assign platforms = platforms | push "ms dos" %}
+{% assign platforms = platforms | push "dr dos" %}
 platforms: {{ platforms }}
 
 {% for b in site.builds %}
