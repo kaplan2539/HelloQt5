@@ -3,7 +3,7 @@ layout: default
 title: Home
 ---
 
-{% for b in site.branches %}
+{% for b in site.branches.files %}
 <h1>{{b.name}}</h1>
 {% endfor %}
 
