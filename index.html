@@ -6,15 +6,15 @@ title: Home
 <h1>HelloQt5</h1>
 
 {% assign platforms = site.array %}
-{% assign platforms = platforms | push: "ms dos" %}
-{% assign platforms = platforms | push: "dr dos" %}
-platforms: {{ platforms }}
 
 {% for b in site.builds %}
   {% assign platforms = platforms | push: b.platform %}
   {{ b.platform | default: "no platform" }} <br/>
   {{ b.branch | default: "no branch" }} <br/>
 {% endfor %}
+
+platforms: {{ platforms }} <br/>
+{% assign platforms | uniq: platforms %} 
 platforms: {{ platforms }}
 
 <br/>
