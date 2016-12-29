@@ -33,15 +33,15 @@ branches:
 <tr>
     <th>OS</th>
     {% for b in branches %}
-    <th>{{ b.title }}</th>
+    <th>{{ b }}</th>
     {% endfor %}
 </tr>
 
 {% for p in platforms %}
 <tr>
-    <td>{{ p.title }}</td>
+    <td>{{ p }}</td>
     {% for b in branches %}
-    <td><a href="http://dl.bintray.com/kaplan2539/HelloQt5/{{ b.title }}/{{ p.title }}/{{ p.artifact }}">{{ p.artifact }}</a></td>
+    <td><a href="http://dl.bintray.com/kaplan2539/HelloQt5/{{ b }}/{{ p }}/{{ p }}">{{ p }}</a></td>
     {% endfor %}
 </tr>
 {% endfor %}
