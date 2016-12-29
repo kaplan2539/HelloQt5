@@ -14,7 +14,7 @@
     },
 
     "version": {
-        "name": "lastbuild-${BRANCH}",
+        "name": "lastbuild",
         "desc": "last auto-triggered build",
         "released": "${DATE}",
         "vcs_tag": "${REVISION}",
