@@ -16,6 +16,11 @@ collection: {{ c.label }} <br/>
 branch: {{ b.title }} {{ b.collection }}<br/>
 {% endfor%}
 
+{% for p in site.platforms %}
+platform: {{ p.title }} {{ p.collection }}<br/>
+{% endfor%}
+
+
 <table>
 <tr>
     <th>OS</th><th>Develop</th><th>Release</th><th>Master</th>
