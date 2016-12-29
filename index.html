@@ -5,6 +5,11 @@ title: Home
 
 <h1>HelloQt5!!!!</h1>
 
+{% for b in site.builds %}
+  {{ b.platform }} <br/>
+  {{ b.branch }} <br/>
+{% endfor %}
+
 <table>
 <tr>
     <th>OS</th>
