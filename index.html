@@ -5,6 +5,9 @@ title: Home
 
 <h1>HelloQt5</h1>
 
+site.builds.mac_master.branch: {% site.builds.mac_master.branch %} <br/>
+site.builds.mac_master.branch: {% site.builds.{{ "mac" }}_{{ "master" }}.branch %} <br/>
+
 {% assign platforms = site.array %}
 {% assign branches = site.array %}
 
