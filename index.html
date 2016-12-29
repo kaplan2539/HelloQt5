@@ -23,15 +23,18 @@ platform: {{ p.title }} {{ p.collection }}<br/>
 
 <table>
 <tr>
-    <th>OS</th><th>Develop</th><th>Release</th><th>Master</th>
+    <th>OS</th>
+    {% for b in site.branches %}
+    <th>{{ p.title }}</th>
+    {% endfor %}
 </tr>
+
+{% for p in site.platforms %}
 <tr>
-    <td>Mac</td>
-    <td>-</td>
-    <td>-</td>
-    <td><a href="http://dl.bintray.com/kaplan2539/HelloQt5/master/mac/HelloQt.dmg">HelloQt.dmg</a></td>
+    <td>{{ p.title }}</td>
+    {% for b in site.branches %}
+    <td><a href="http://dl.bintray.com/kaplan2539/HelloQt5/{{ b.title }}/mac/HelloQt.dmg">HelloQt.dmg</a></td>
+    {% endfor %}
 </tr>
-<tr>
-    <td>Ubuntu</td><td>-</td><td>-</td><td><a href="http://dl.bintray.com/kaplan2539/HelloQt5/master/ubuntu/HelloQt.deb">HelloQt.deb</a></td>
-</tr>
+{% endfor %}
 </table>
