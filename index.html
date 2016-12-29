@@ -8,7 +8,7 @@ title: Home
 {% assign platforms = site.array %}
 
 {% for b in site.builds %}
-  {% assign platforms = platforms | push: b.platform %}
+  {% assign platforms = platforms | push: b.plat %}
   {{ b.platform | default: "no platform" }} <br/>
   {{ b.branch | default: "no branch" }} <br/>
 {% endfor %}
