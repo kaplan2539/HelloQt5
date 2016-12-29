@@ -6,8 +6,8 @@ title: Home
 <h1>HelloQt5!!!!</h1>
 
 {% for b in site.builds %}
-  {{ b.platform }} <br/>
-  {{ b.branch }} <br/>
+  {{ b.platform | default: "no platform" }} <br/>
+  {{ b.branch | default: "no branch" }} <br/>
 {% endfor %}
 
 <table>
