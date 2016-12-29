@@ -8,7 +8,12 @@ title: Home
 <h2>Time: {{ site.time }}</h2>
 
 {% for c in site.collections %}
-collection: {{ c.label }}
+collection: {{ c.label }} <br/>
+{% endfor%}
+
+
+{% for b in site.branches %}
+branch: {{ b.name }} <br/>
 {% endfor%}
 
 <table>
