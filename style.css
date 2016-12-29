@@ -7,9 +7,7 @@ body {
     line-height: 1.5;
     padding: 4em 1em;
     color: #566b78;
-}
-
-h2 {
+} h2 {
     margin-top: 1em;
     padding-top: 1em;
 }
@@ -42,20 +40,22 @@ a {
 }
 
 table {
-    color:#666;
-    font-size:12px;
-    background:#eaebec;
-*   margin:20px;
-    border:#ccc 1px solid;
+color: #333; /* Lighten up font color */
+font-family: Helvetica, Arial, sans-serif; /* Nicer font */
+width: 640px;
+border-collapse:
+collapse; border-spacing: 0;
 }
 
-table tr td {
-    border:#ccc 1px solid;
-    padding: 0px;
-/*
-    border-top: #ccc 1px solid;
-    border-bottom: #ccc 1px solid;
-    border-left: #ccc 1px solid;
-*/
+td, th { border: 1px solid #CCC; height: 30px; } /* Make cells a bit taller */
+
+th {
+background: #F3F3F3; /* Light grey background */
+font-weight: bold; /* Make sure they're bold */
 }
- 
+
+td {
+background: #FAFAFA; /* Lighter grey background */
+text-align: center; /* Center our text */
+}
+
