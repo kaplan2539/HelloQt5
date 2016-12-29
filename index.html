@@ -11,9 +11,11 @@ title: Home
 platforms: {{ platforms }}
 
 {% for b in site.builds %}
+  {% assign platforms = platforms | push: b.platform %}
   {{ b.platform | default: "no platform" }} <br/>
   {{ b.branch | default: "no branch" }} <br/>
 {% endfor %}
+platforms: {{ platforms }}
 
 <br/>
 
