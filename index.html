@@ -3,12 +3,21 @@ layout: default
 title: Home
 ---
 
-<h1>HelloQt5!!!!</h1>
+<h1>HelloQt5!</h1>
+
+{% assign platforms = site.array %}
 
 {% for b in site.builds %}
+  {% assign platforms = platforms | push b.platform %}
   {{ b.platform | default: "no platform" }} <br/>
   {{ b.branch | default: "no branch" }} <br/>
 {% endfor %}
+
+platforms:
+{% for p in platforms %}
+    {{ p }}
+{% endfor %}
+<br/>
 
 <table>
 <tr>

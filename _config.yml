@@ -8,8 +8,7 @@ description: This is a sample Jekyll Blog.
 author: Your Name
 
 # Your email if you want it to be linked on the contact page
-author_email: you@example.com
-
+author_email: you@example.com 
 # The directory for category index pages. Change it to something else if
 # for example you want links like /categories/category1 instead of /category1
 category_dir: /
@@ -42,3 +41,5 @@ collections:
 - branches
 - platforms
 - builds
+
+array: []
