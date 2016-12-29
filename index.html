@@ -7,6 +7,10 @@ title: Home
 
 <h2>Time: {{ site.time }}</h2>
 
+{% for c in site.collections %}
+collection: {{ c.name }}
+{% endfor%}
+
 <table>
 <tr>
     <th>OS</th><th>Develop</th><th>Release</th><th>Master</th>
