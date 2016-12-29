@@ -17,7 +17,7 @@ title: Home
 <tr>
     <td>{{ p.title }}</td>
     {% for b in site.branches %}
-    <td><a href="http://dl.bintray.com/kaplan2539/HelloQt5/{{ b.title }}/{{ p.title }}/{ p.artifact }}">HelloQt.dmg</a></td>
+    <td><a href="http://dl.bintray.com/kaplan2539/HelloQt5/{{ b.title }}/{{ p.title }}/{{ p.artifact }}">{{ p.artifact }}</a></td>
     {% endfor %}
 </tr>
 {% endfor %}
