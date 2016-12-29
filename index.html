@@ -15,7 +15,10 @@ title: Home
 
 platforms: {{ platforms }} <br/>
 {% assign platforms = platforms | uniq %} 
-platforms: {{ platforms }}
+platforms:
+{% for p in platforms %}
+{{ p }} <&nbsp;>
+{% endfor %}
 
 <br/>
 
