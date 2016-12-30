@@ -1,6 +1,0 @@
----
-name: mac_master
-platform: mac
-branch: master
-artifact: HelloQt.dmg
----
