@@ -1,9 +1,0 @@
-type: build
-branch: release
-number: 1
-platform: win
-revision: 6ae0a0f0e963b921400a02f47b81673e
-artifact: HelloQt.win
-artifact_md5: 5ae32d362c098832b0bc894bac409d93
-artifact_url: http://dl.bintray/kaplan2539/HelloQt5/release/win/HelloQt.win
-
