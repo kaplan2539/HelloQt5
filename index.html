@@ -5,44 +5,20 @@ title: Home
 
 <h1>HelloQt5</h1>
 
-site.builds.mac_master.branch: {{ site.builds.mac_master.branch }} <br/>
-
-site.builds.label = {{ site.builds.label }} <br/>
-site.builds.docs = {{ site.builds.docs }} <br/>
-site.builds.files = {{ site.builds.files }} <br/>
-site.builds.relative_directory = {{ site.builds.relative_directory }} <br/>
-site.builds.directory = {{ site.builds.directory }} <br/>
-site.builds.output = {{ site.builds.output }} <br/>
-
 {% assign platforms = site.array %}
 {% assign branches = site.array %}
+{% assign builds = site.array %}
 
-{% for b in site.builds %}
-  b.collection = {{ b.collection }} <br/>
-  b.path = {{ b.path }} <br/>
-  b.name = {{ b.name }} <br/>
-  b.title = {{ b.title }} <br/>
-  b.output_ext = {{ b.output_ext }} <br/>
-  {% assign platforms = platforms | push: b.platform %}
-  {% assign branches = branches | push: b.branch %}
+{% for d in site.data %}
+{% if d[1].type == 'build' %}
+  {% assign platforms = platforms | push: d[1].platform %}
+  {% assign branches = branches | push: d[1].branch %}
+  {% assign builds = builds | push: d[1] %}
+{% endif %}
 {% endfor %}
 
 {% assign platforms = platforms | uniq %} 
 {% assign branches = branches | uniq %} 
-
-platforms:
-{% for p in platforms %}
-{{ p }} &nbsp;
-{% endfor %}
-<br/>
-branches:
-{% for b in branches %}
-{{ b }} &nbsp;
-{% endfor %}
-<br/>
-
-
-<br/>
 
 <table>
 <tr>
@@ -56,7 +32,16 @@ branches:
 <tr>
     <td>{{ p }}</td>
     {% for b in branches %}
-    <td><a href="http://dl.bintray.com/kaplan2539/HelloQt5/{{ b }}/{{ p }}/{{ p }}">{{ p }}</a></td>
+        <td>
+        {% assign _builds = builds | where_exp: "i", "i.platform == p" %}
+        {% assign _builds = _builds | where_exp: "i", "i.branch == b" %}
+        {% assign _builds = _builds | sort: 'number' | reverse | %}
+        
+        {% for b in _builds limit: 3%}
+        {{ b.number }} &nbsp;
+        <a href={{ b.artifact_url }}>{{ b.artifact }}</a><br/>
+        {% endfor %}
+        </td>
     {% endfor %}
 </tr>
 {% endfor %}

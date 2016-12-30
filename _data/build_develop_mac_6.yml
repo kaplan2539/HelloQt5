@@ -1,0 +1,9 @@
+type: build
+branch: develop
+number: 6
+platform: mac
+revision: e5d72e454f66a1b283e00a4d463a3c47
+artifact: HelloQt.mac
+artifact_md5: a5a92498b853d0f1d1ec1e41ab576ba3
+artifact_url: http://dl.bintray/kaplan2539/HelloQt5/develop/mac/HelloQt.mac
+

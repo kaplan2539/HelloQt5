@@ -1,0 +1,9 @@
+type: build
+branch: release
+number: 2
+platform: ubuntu
+revision: 7ff1d33b635e56fca27433aa93b12117
+artifact: HelloQt.ubuntu
+artifact_md5: 3edde45f09b50230fc7bfd4280bdbfaa
+artifact_url: http://dl.bintray/kaplan2539/HelloQt5/release/ubuntu/HelloQt.ubuntu
+

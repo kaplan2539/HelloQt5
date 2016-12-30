@@ -1,0 +1,9 @@
+type: build
+branch: develop
+number: 9
+platform: ubuntu
+revision: c47dc1865efd283623b0d2329fdf0775
+artifact: HelloQt.ubuntu
+artifact_md5: aaef19f02a6442c3c9f6767e5fa15baf
+artifact_url: http://dl.bintray/kaplan2539/HelloQt5/develop/ubuntu/HelloQt.ubuntu
+

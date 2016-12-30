@@ -1,0 +1,9 @@
+type: build
+branch: master
+number: 7
+platform: win
+revision: 8a5664c0a82f9f17902ee4195eea97c2
+artifact: HelloQt.win
+artifact_md5: e290d1720fe0e6c014b88ce73cac3ccb
+artifact_url: http://dl.bintray/kaplan2539/HelloQt5/master/win/HelloQt.win
+

@@ -1,0 +1,9 @@
+type: build
+branch: master
+number: 7
+platform: ubuntu
+revision: 6f59ebea70cc63f1605f2569cf1850a3
+artifact: HelloQt.ubuntu
+artifact_md5: 596efddaa4bd8b2306070f7ecb54caec
+artifact_url: http://dl.bintray/kaplan2539/HelloQt5/master/ubuntu/HelloQt.ubuntu
+
