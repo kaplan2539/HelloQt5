@@ -11,17 +11,23 @@ site.builds.mac_master.branch: {% site.builds.mac_master.branch %} <br/>
 {% assign branches = site.array %}
 
 {% for b in site.builds %}
+  b.collection = {{ b.collection }} <br/>
+  b.path = {{ b.path }} <br/>
+  b.name = {{ b.name }} <br/>
+  b.title = {{ b.title }} <br/>
+  b.output_ext = {{ b.output_ext }} <br/>
   {% assign platforms = platforms | push: b.platform %}
   {% assign branches = branches | push: b.branch %}
 {% endfor %}
 
 {% assign platforms = platforms | uniq %} 
+{% assign branches = branches | uniq %} 
+
 platforms:
 {% for p in platforms %}
 {{ p }} &nbsp;
 {% endfor %}
 <br/>
-{% assign branches = branches | uniq %} 
 branches:
 {% for b in branches %}
 {{ b }} &nbsp;
