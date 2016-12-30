@@ -1,4 +1,5 @@
 ---
+name: mac_develop
 platform: mac
 branch: develop
 ---
